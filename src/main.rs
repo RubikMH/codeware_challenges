@@ -1,16 +1,26 @@
-fn parse(code: &str) -> Vec<i32> {
-    let input = String::from(code);
-    let mut output = vec![];
+fn create_phone_number(numbers: &[u8]) -> String {
+    let mut output = String::from("");
 
-    let mut init_number = 0;
+    for (index, item) in numbers.iter().enumerate() {
+        match index {
+            0 => {
+                output.push('(');
+                output.push_str(&item.to_string());
+            }
+            2 => {
+                output.push_str(&item.to_string());
+                output.push(')');
+            }
+            3 => {
+                output.push(' ');
+                output.push_str(&item.to_string());
+            }
+            6 => {
+                output.push('-');
+                output.push_str(&item.to_string());
+            }
 
-    for item in input.split("") {
-        match item {
-            "i" => init_number += 1,
-            "s" => init_number = init_number * init_number,
-            "d" => init_number -= 1,
-            "o" => output.push(init_number),
-            _ => continue,
+            _ => output.push_str(&item.to_string()),
         }
     }
 
@@ -18,6 +28,7 @@ fn parse(code: &str) -> Vec<i32> {
 }
 
 fn main() {
-    let result = parse("iiisdosodddddiso");
-    println!("{:?}", result);
+    let result = create_phone_number(&[1, 2, 3, 4, 5, 6, 7, 8, 9, 0]);
+
+    println!("{}", result);
 }
