@@ -1,10 +1,23 @@
-fn array_diff<T: PartialEq>(a: Vec<T>, b: Vec<T>) -> Vec<T> {
-    let mut input = a;
-    input.retain(|x| !b.contains(x));
-    input
+fn parse(code: &str) -> Vec<i32> {
+    let input = String::from(code);
+    let mut output = vec![];
+
+    let mut init_number = 0;
+
+    for item in input.split("") {
+        match item {
+            "i" => init_number += 1,
+            "s" => init_number = init_number * init_number,
+            "d" => init_number -= 1,
+            "o" => output.push(init_number),
+            _ => continue,
+        }
+    }
+
+    output
 }
 
 fn main() {
-    let result = array_diff(vec![1, 2, 2], vec![1]);
+    let result = parse("iiisdosodddddiso");
     println!("{:?}", result);
 }
