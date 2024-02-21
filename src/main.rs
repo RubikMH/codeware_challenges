@@ -1,34 +1,21 @@
-fn create_phone_number(numbers: &[u8]) -> String {
+fn spin_words(words: &str) -> String {
     let mut output = String::from("");
 
-    for (index, item) in numbers.iter().enumerate() {
-        match index {
-            0 => {
-                output.push('(');
-                output.push_str(&item.to_string());
-            }
-            2 => {
-                output.push_str(&item.to_string());
-                output.push(')');
-            }
-            3 => {
-                output.push(' ');
-                output.push_str(&item.to_string());
-            }
-            6 => {
-                output.push('-');
-                output.push_str(&item.to_string());
-            }
-
-            _ => output.push_str(&item.to_string()),
+    let mut temp_vec = vec![];
+    for item in words.split(" ") {
+        if item.len() >= 5 {
+            let rev_word = item.chars().rev().collect::<String>();
+            temp_vec.push(rev_word)
+        } else {
+            temp_vec.push(item.to_owned());
         }
     }
 
+    output.push_str(&temp_vec.join(" "));
     output
 }
-
 fn main() {
-    let result = create_phone_number(&[1, 2, 3, 4, 5, 6, 7, 8, 9, 0]);
+    let result = spin_words("You are almost to the last test");
 
     println!("{}", result);
 }
