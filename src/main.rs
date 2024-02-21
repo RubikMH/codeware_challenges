@@ -1,21 +1,20 @@
-fn spin_words(words: &str) -> String {
-    let mut output = String::from("");
+use std::collections::HashMap;
 
-    let mut temp_vec = vec![];
-    for item in words.split(" ") {
-        if item.len() >= 5 {
-            let rev_word = item.chars().rev().collect::<String>();
-            temp_vec.push(rev_word)
+fn count(input: &str) -> HashMap<char, i32> {
+    let mut output: HashMap<char, i32> = Default::default();
+
+    for item in input.chars() {
+        if output.contains_key(&item) {
+            output.entry(item).and_modify(|x| *x += 1);
         } else {
-            temp_vec.push(item.to_owned());
+            output.insert(item, 1);
         }
     }
 
-    output.push_str(&temp_vec.join(" "));
     output
 }
 fn main() {
-    let result = spin_words("You are almost to the last test");
+    let result = count("aabb");
 
-    println!("{}", result);
+    println!("{:?}", result);
 }
